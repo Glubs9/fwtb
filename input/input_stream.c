@@ -1,8 +1,8 @@
 //currently this code is broken but this is the general idea for the input
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #include "input_stream.h"
 #include "CONSTANTS.h"
 
@@ -12,8 +12,16 @@ bool end_reached;
 char* get_word()
 {
 	char* buff = malloc(sizeof(char) * MAX_WORD_LENGTH);
-	int tmp = fscanf(stream, "%s", buff);
-	if (tmp == EOF) { end_reached = false; }
+	char c = fgetc(stream);
+	int head = 0;
+	while (c != ' ' && c != '\t' && c != '\n' && c != EOF) {
+		buff[head] = c;
+		c = fgetc(stream);
+		head++;
+	}
+	buff[head] = '\0';
+	if (c == EOF) { end_reached = true; }
+	else if (stream == stdin && c == '\n') { end_reached = true; }
 	return buff;
 }
 
@@ -36,7 +44,6 @@ void setup_input()
 }
 
 //main exists for testing
-/*
 int main()
 {
 	setup_input();
@@ -46,4 +53,3 @@ int main()
 	}
 	printf("end \n");
 }
-*/
