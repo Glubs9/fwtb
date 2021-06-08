@@ -43,7 +43,8 @@ void setup_input()
 	end_reached = false;
 }
 
-//main exists for testing
+//test main example
+/*
 int main()
 {
 	setup_input();
@@ -53,3 +54,4 @@ int main()
 	}
 	printf("end \n");
 }
+*/
