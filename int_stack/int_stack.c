@@ -33,7 +33,7 @@ int pop_int_stack(int_stack *s)
 //might change where this is but for now it works
 void print_int_stack(int_stack *s)
 {
-	for (int i = 0; i < s->head; i++) {
+	for (int i = 1; i <= s->head; i++) { //something wacky is happening with the stack indexes
 		printf("%d ", s->stack[i]);
 	}
 	printf("\n");
