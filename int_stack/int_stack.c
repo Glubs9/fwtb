@@ -1,17 +1,18 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "int_stack.h"
 
 //this file holds the commands for manipulating a stack of ints (the main data stack in forth)
 
-int_stack* create_int_stack()
+int_stack* init_int_stack()
 {
-	int_stack *ret;
+	int_stack *ret; //do I need to allocate?
 	ret->stack = malloc(sizeof(int) * 1);
 	ret->head = 0;
 	ret->allocated_head = 1;
 }
 
-void push_int_stack(int_stack* s, int add)
+void push_int_stack(int_stack *s, int add)
 {
 	s->head++;
 	if (s->head >= s->allocated_head) {
@@ -23,10 +24,19 @@ void push_int_stack(int_stack* s, int add)
 
 //how to handle stack out of size?
 	//throw error or something
-int pop_int_stack(int_stack* s)
+int pop_int_stack(int_stack *s)
 {
 	s->head--; //might be worth deallocating memory here if the difference between head and allocated head is too large but for now it probably doesn't matter
 	return s->stack[s->head+1];
+}
+
+//might change where this is but for now it works
+void print_int_stack(int_stack *s)
+{
+	for (int i = 0; i < s->head; i++) {
+		printf("%d ", s->stack[i]);
+	}
+	printf("\n");
 }
 
 //main for basic testing and analysis
@@ -35,7 +45,7 @@ int pop_int_stack(int_stack* s)
 int main()
 {
 	printf("before create_int_tsack \n");
-	int_stack* s = create_int_stack();
+	int_stack* s = init_int_stack();
 	printf("created stack\n");
 	push_int_stack(s, 3);
 	printf("pushed 3\n");

@@ -11,7 +11,7 @@ bool end_reached;
 
 char* get_word()
 {
-	char* buff = malloc(sizeof(char) * MAX_WORD_LENGTH);
+	char *buff = malloc(sizeof(char) * MAX_WORD_LENGTH);
 	char c = fgetc(stream);
 	int head = 0;
 	while (c != ' ' && c != '\t' && c != '\n' && c != EOF) {
