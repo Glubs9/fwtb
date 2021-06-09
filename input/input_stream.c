@@ -1,4 +1,3 @@
-//currently this code is broken but this is the general idea for the input
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -35,6 +34,12 @@ void new_stream(FILE *s)
 {
 	stream = s;
 	end_reached = false;
+}
+
+//useful for getting new line input from stdin
+void force_continue()
+{
+	end_reached = false; 
 }
 
 void setup_input()

@@ -6,10 +6,11 @@
 
 int_stack* init_int_stack()
 {
-	int_stack *ret; //do I need to allocate?
+	int_stack *ret = malloc(sizeof(int_stack)); //do I need to allocate?
 	ret->stack = malloc(sizeof(int) * 1);
 	ret->head = 0;
 	ret->allocated_head = 1;
+	return ret;
 }
 
 void push_int_stack(int_stack *s, int add)
