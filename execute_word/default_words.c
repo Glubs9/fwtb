@@ -60,14 +60,14 @@ void add_default_words(dictionary *d)
 {
 	enum node_type nt = code;
 	void *data = NULL; //do I have to allocate (data should be empty? but in real forth this is a machine code whatever)
-	push_word(d, ".", data, nt, false); //maybe using the same data is causing this error
-	push_word(d, ".s", data, nt, false);
-	push_word(d, "+", data, nt, false);
-	push_word(d, "-", data, nt, false);
-	push_word(d, "*", data, nt, false);
-	push_word(d, "/", data, nt, false);
-	push_word(d, "@", data, nt, false);
-	push_word(d, "!", data, nt, false);
-	push_word(d, "CREATE", data, nt, false);
-	push_word(d, "DOES>", data, nt, false);
+	push_word(d, ".", data, nt); //maybe using the same data is causing this error
+	push_word(d, ".s", data, nt);
+	push_word(d, "+", data, nt);
+	push_word(d, "-", data, nt);
+	push_word(d, "*", data, nt);
+	push_word(d, "/", data, nt);
+	push_word(d, "@", data, nt);
+	push_word(d, "!", data, nt);
+	push_word(d, "CREATE", data, nt);
+	push_word(d, "DOES>", data, nt);
 }

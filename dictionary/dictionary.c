@@ -12,7 +12,7 @@ dictionary* init_dict()
 }
 
 //feels a little weird? and unecersarry?
-void push_word(dictionary *dict, char name[MAX_NAME_LENGTH], void *data, enum node_type nt, bool immediate)
+void push_word(dictionary *dict, char name[MAX_NAME_LENGTH], void *data, enum node_type nt)
 {
 	dict_node *dn = malloc(sizeof(dict_node));
 	strcpy(dn->name, name); //strcpy?
