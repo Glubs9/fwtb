@@ -9,6 +9,6 @@ void execute_word(dict_node *dn, int_stack *s, char *string)
 	if (dn == (dict_node*) -1) {
 		execute_number(s, string);
 	} else if (is_default_word(dn)) {
-		execute_default_word(dn, s);
+		execute_default_word(dn, s, compiling);
 	} 
 }

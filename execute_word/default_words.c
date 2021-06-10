@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "../dictionary/dictionary.h"
 #include "../int_stack/int_stack.h"
+#include "../input/input_stream.h"
 
 //this file describes the execution of some default words
 
@@ -23,11 +24,13 @@ bool is_default_word(dict_node *node)
 		strcmp(n, "@") == 0 || //instructions here and below are not implemented yet
 		strcmp(n, "!") == 0 ||
 		strcmp(n, "CREATE") == 0 ||
-		strcmp(n, "DOES>") == 0
+		strcmp(n, "DOES>") == 0 ||
+		strcmp(n, ":") == 0 ||
+		strcmp(n, ";") == 0
 	);
 }
 
-void execute_default_word(dict_node *node, int_stack *s)
+void execute_default_word(dictionary* d, dict_node *node, int_stack *s, bool *compiling)
 {
 	//wish switch statement worked on strings
 	char *n = node->name;
@@ -51,6 +54,15 @@ void execute_default_word(dict_node *node, int_stack *s)
 		int tos1 = pop_int_stack(s);
 		int tos2 = pop_int_stack(s);
 		push_int_stack(s, tos1/tos2);
+	} else if (strcmp(n, ":") == 0) {
+		(*compiling) = true;
+		char *string;
+		string = get_word(); //error check and maybe modularize later (also means definitions can't strech lines in repl)
+		//i feel i should have data = push self to stack but i can't be bothered with that right now
+		push_word(d, string, NULL, code);
+	} else if (strcmp(n, ";") == 0) {
+		(*compiling) = false;
+		//add exit to data on word
 	} else {
 		printf("default word called that has not been implemented\n");
 	}
@@ -70,4 +82,6 @@ void add_default_words(dictionary *d)
 	push_word(d, "!", data, nt);
 	push_word(d, "CREATE", data, nt);
 	push_word(d, "DOES>", data, nt);
+	push_word(d, ":", data, nt);
+	push_word(d, ";", data, immediate);
 }
