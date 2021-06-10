@@ -5,6 +5,10 @@
 #include "../execute_word/execute.h"
 #include "../dictionary/user_code.h"
 
+//ok so I seem to haev made a mistake with user input but to be honest I don't really mind all that
+//much
+	//the issue is that I have to deal with two stacks (one call and one input) instead of just
+	//one stack and this is gonna make everything an ightmare but whatever right?
 void interpret(dictionary *d, int_stack *s) {
 	char *string;
 	dict_node *word;
