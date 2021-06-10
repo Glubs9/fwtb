@@ -4,7 +4,7 @@
 #include "default_words.h"
 #include "number_handler.h"
 
-void execute_word(dict_node *dn, int_stack *s, char *string)
+void execute_word(dict_node *dn, int_stack *s, char *string, bool *compiling)
 {
 	if (dn == (dict_node*) -1) {
 		execute_number(s, string);

@@ -12,7 +12,7 @@ void interpret(dictionary *d, int_stack *s) {
 		string = get_word();
 		word = search_dict(d, string);
 		if (!compiling) {
-			execute_word(word, s, string);
+			execute_word(word, s, string, &compiling);
 		}
 	}
 
