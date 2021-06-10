@@ -1,0 +1,4 @@
+	- de allocate memory?
+		- i have completey forgotten to do this
+	- figure out how macros work and implement them
+	- control flow
