@@ -1,8 +1,4 @@
-#include <stdlib.h> //might not be used, delete if unecersrarry
-#include "../dictionary/user_code.h"
-#include "execute.h"
+#ifndef USER_CODE
+#define USER_CODE
 
-//pass anything else?
-void execute_user_code(dict_node *dn, int_stack *s) 
-{
-}
+#endif
