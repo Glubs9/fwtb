@@ -16,6 +16,13 @@ typedef struct dict_node {
 	enum node_type node_type; //bad name?
 } dict_node;
 
+//user defined code
+	//given node_type = code and not default word then dict_node->data = user_code;
+typedef struct user_code {
+	int size;
+	dict_node *words;
+} user_code;
+
 //might not be necersarry
 typedef struct dictionary {
 	dict_node *head;
