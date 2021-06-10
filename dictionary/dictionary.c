@@ -19,7 +19,6 @@ void push_word(dictionary *dict, char name[MAX_NAME_LENGTH], void *data, enum no
 	dn->data = data;
 	dn->node_type = nt;
 	dn->prev = dict->head;
-	dn->immediate = immediate;
 	dict->head = dn;
 }
 

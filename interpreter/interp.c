@@ -16,7 +16,7 @@ void interpret(dictionary *d, int_stack *s) {
 			dict_node *top = d->head;
 			user_code *ud = (user_code*) top->data;
 		} else {
-			execute_word(word, d, s, string);
+			execute_word(d, word, s, string, &compiling);
 		}
 	}
 
