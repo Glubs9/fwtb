@@ -23,7 +23,6 @@ void interpret(dictionary *d, int_stack *s) {
 		if (call_stack_empty(c)) {
 			string = get_word();
 			word = search_dict(d, string);
-			printf("word found %s %d\n", string, word);
 		} else {
 			word = pop_call_stack(c);
 			string = word->name; //this is why I feel string is superfluous
