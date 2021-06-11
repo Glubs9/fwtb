@@ -19,3 +19,7 @@
 	- (or a better language than c lmao, cause it might just be c that is forcing me to code like this)
 		- or i could just be shit at c
 		- very possible
+	- de allocate memory?
+		- i have completey forgotten to do this
+	- figure out how macros work and implement them
+	- control flow
