@@ -5,6 +5,6 @@
 #include "../int_stack/int_stack.h"
 #include "../call_stack/call_stack.h"
 
-void execute_word(dictionary *d, dict_node *dn, int_stack *s, char *string, bool *compiling, call_stack *c);
+void execute_word(dictionary *d, dict_node *dn, int_stack *s, bool *compiling, call_stack *c);
 
 #endif
