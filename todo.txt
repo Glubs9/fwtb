@@ -1,1 +1,21 @@
 	- merge int_stack and call_stack
+	- there is a suprising similarity between call_stack and user_code
+		- maybe we could implement user_code as a call_stack and merge the main call_stack
+		and user_code whenever we encounter it, that would kinda work actually
+	- remove the idea of an int_stack and just have everything as words, even number literals
+		- that way we don't have to write tonnes of code handling numbers just in case
+		- migrate everything ovre to what is done in interp.c
+	- this project is already a mess :(
+		- oh well first big project I guess no harm done
+		- and in c as well right so it's not always gonna be the best :)
+	- you know what, doing this project I can see the advantage of classes
+		- on to c++!
+		- or a not shit language i guess
+		- actually go could be cool with its interfaces and stuff
+		- or rust maybe but memory safety hasn't really been a major issue for me so far
+		- idk none of these languages really have the *cool* factor that c does (for me at
+				least)
+		- that will probably wear off in a little bit hey though
+	- (or a better language than c lmao, cause it might just be c that is forcing me to code like this)
+		- or i could just be shit at c
+		- very possible

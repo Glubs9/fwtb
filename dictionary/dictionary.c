@@ -39,3 +39,19 @@ dict_node* search_dict(dictionary *dict, char *name)
 {
 	return _search_dict(dict->head, name);
 }
+
+//not printing?
+void _print_dict(dict_node *dn)
+{
+	if (dn == (dict_node*) -1) {
+		printf("\n");
+	} else {
+		printf("%s ", dn->name);
+		_print_dict(dn->prev);
+	}
+}
+
+void print_dict(dictionary *d)
+{
+	_print_dict(d->head);
+}

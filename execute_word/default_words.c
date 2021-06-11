@@ -2,7 +2,9 @@
 #include <string.h>
 #include <stdio.h>
 #include "../dictionary/dictionary.h"
+#include "../dictionary/user_code.h"
 #include "../int_stack/int_stack.h"
+#include "../call_stack/call_stack.h"
 #include "../input/input_stream.h"
 
 //this file describes the execution of some default words
@@ -30,7 +32,7 @@ bool is_default_word(dict_node *node)
 	);
 }
 
-void execute_default_word(dictionary* d, dict_node *node, int_stack *s, bool *compiling)
+void execute_default_word(dictionary* d, dict_node *node, int_stack *s, bool *compiling, call_stack *c)
 {
 	//wish switch statement worked on strings
 	char *n = node->name;
@@ -59,10 +61,12 @@ void execute_default_word(dictionary* d, dict_node *node, int_stack *s, bool *co
 		char *string;
 		string = get_word(); //error check and maybe modularize later (also means definitions can't strech lines in repl)
 		//i feel i should have data = push self to stack but i can't be bothered with that right now
-		push_word(d, string, NULL, code);
+		user_code *uc;
+		uc = init_user_code();
+		push_word(d, string, (void*) uc, code); //void* type cast might be unecersarry
 	} else if (strcmp(n, ";") == 0) {
 		(*compiling) = false;
-		//add exit to data on word
+		//add exit to data on word (maybe not? i'm not 100% on how I have implemented this language)
 	} else {
 		printf("default word called that has not been implemented\n");
 	}
