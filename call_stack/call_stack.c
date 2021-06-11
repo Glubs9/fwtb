@@ -26,6 +26,7 @@ void push_call_stack(call_stack *s, dict_node *add)
 	s->head++;
 	if (s->head >= s->allocated_head) {
 		s->allocated_head++;
+		printf("before realloc call allocated_head == %d \n", s->allocated_head);
 		s->stack = realloc(s->stack, s->allocated_head);
 	}
 	s->stack[s->head-1] = add; //DO NOT DELETE IDIOT
