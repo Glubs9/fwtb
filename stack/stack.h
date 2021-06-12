@@ -1,5 +1,7 @@
-#ifndef STACK
-#define STACK
+#ifndef STACK_H
+#define STACK_H
+
+#include <stdbool.h>
 
 typedef struct stack {
 	void **stack;
@@ -8,7 +10,7 @@ typedef struct stack {
 } stack;
 
 stack* init_stack();
-void push_stack(stack *s, int add);
+void push_stack(stack *s, void* add);
 void* pop_stack(stack *s);
 bool stack_empty(stack *s);
 

@@ -1,17 +1,17 @@
 #include "dictionary/dictionary.h"
-#include "int_stack/int_stack.h"
 #include "input/input_stream.h"
 #include "execute_word/execute.h"
 #include "execute_word/default_words.h"
 #include "interpreter/interp.h"
+#include "stack/stack.h"
 
 //this feels unecersarry
-void setup(dictionary **d, int_stack **s)
+void setup(dictionary **d, stack **s)
 {
 	*d = init_dict();
 	add_default_words(*d);
 	//add stdlib here
-	*s = init_int_stack();
+	*s = init_stack();
 	setup_input();
 }
 
@@ -19,7 +19,7 @@ int main()
 {
 	printf("welcome to forth with the boys\n\n");
 	dictionary *d;
-	int_stack *s;
+	stack *s;
 	setup(&d, &s);
 	while (true) {
 		printf("> ");

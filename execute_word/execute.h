@@ -2,9 +2,8 @@
 #define EXECUTE
 
 #include "../dictionary/dictionary.h"
-#include "../int_stack/int_stack.h"
-#include "../call_stack/call_stack.h"
+#include "../stack/stack.h"
 
-void execute_word(dictionary *d, dict_node *dn, int_stack *s, bool *compiling, call_stack *c);
+void execute_word(dictionary *d, dict_node *dn, stack *s, bool *compiling, stack *call_stack);
 
 #endif

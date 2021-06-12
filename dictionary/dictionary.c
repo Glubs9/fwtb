@@ -30,7 +30,9 @@ dict_node* _search_dict(dict_node *dn, char *name)
 		strcpy(dn->name, name);
 		char *p; //wtf?
 		int n = strtol(name, &p, 10);
-		dn->data = &n;
+		int *n2 = malloc(sizeof(int));
+		(*n2) = n; //weird funky memory stuff because c
+		dn->data = n2;
 		dn->node_type = number;
 		return dn;
 	} else if (strcmp(dn->name, name) == 0) {

@@ -10,20 +10,20 @@ stack* init_stack()
 	ret->allocated_head = 1;
 }
 
-void push_int_stack(stack *s, void* add)
+void push_stack(stack *s, void* add)
 {
 	s->head++;
 	if (s->head >= s->allocated_head) {
 		s->allocated_head++;
 		s->stack = realloc(s->stack, s->allocated_head); //check that this isn't causing the overflow
 	}
-	s->stack[s->head] = add;
+	s->stack[s->head-1] = add;
 }
 
-void *pop_sack(stack *s)
+void *pop_stack(stack *s)
 {
 	s->head--;
-	return s->stack[s->head+1];
+	return s->stack[s->head];
 }
 
 bool stack_empty(stack *s)
@@ -33,7 +33,7 @@ bool stack_empty(stack *s)
 
 //idk how i should do this?
 /*
-void print_stack(stack *s)
+void prstack(stack *s)
 {
 }
 */
