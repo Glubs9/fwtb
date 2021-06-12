@@ -39,7 +39,7 @@ void execute_default_word(dictionary* d, dict_node *node, stack *s, bool *compil
 	char *n = node->name;
 	if (strcmp(n, ".") == 0) {
 		int *n = pop_stack(s);
-		printf("v: %d s->head: %d\n", (*n), s->head);
+		printf("%d\n", (*n));
 	} else if (strcmp(n, ".s") == 0) {
 		//maybe I should put this somewhere else but tbh I can't be bothered
 		for (int i = 0; i < s->head; i++) {
