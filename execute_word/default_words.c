@@ -1,10 +1,10 @@
 #include <stdbool.h>
+#include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
 #include "../dictionary/dictionary.h"
 #include "../dictionary/user_code.h"
-#include "../int_stack/int_stack.h"
-#include "../call_stack/call_stack.h"
+#include "../stack/stack.h"
 #include "../input/input_stream.h"
 
 //this file describes the execution of some default words
@@ -28,34 +28,49 @@ bool is_default_word(dict_node *node)
 		strcmp(n, "CREATE") == 0 ||
 		strcmp(n, "DOES>") == 0 ||
 		strcmp(n, ":") == 0 ||
-		strcmp(n, ";") == 0
+		strcmp(n, ";") == 0 ||
+		strcmp(n, "=") == 0
 	);
 }
 
-void execute_default_word(dictionary* d, dict_node *node, int_stack *s, bool *compiling, call_stack *c)
+void execute_default_word(dictionary* d, dict_node *node, stack *s, bool *compiling, stack *call_stack)
 {
 	//wish switch statement worked on strings
 	char *n = node->name;
 	if (strcmp(n, ".") == 0) {
-		printf("%d\n", pop_int_stack(s));
+		int *n = pop_stack(s);
+		printf("v: %d s->head: %d\n", (*n), s->head);
 	} else if (strcmp(n, ".s") == 0) {
-		print_int_stack(s);
+		//maybe I should put this somewhere else but tbh I can't be bothered
+		for (int i = 0; i < s->head; i++) {
+			int *n = s->stack[i];
+			printf("%d ", *n); //deallocated before
+		}
+		printf("\n");
 	} else if (strcmp(n, "+") == 0) {
-		int tos1 = pop_int_stack(s);
-		int tos2 = pop_int_stack(s);
-		push_int_stack(s, tos1+tos2);
+		int *tos1 = pop_stack(s);
+		int *tos2 = pop_stack(s);
+		int *n = malloc(sizeof(int));
+		*n = (*tos1)+(*tos2);
+		push_stack(s, n);
 	} else if (strcmp(n, "-") == 0) {
-		int tos1 = pop_int_stack(s);
-		int tos2 = pop_int_stack(s);
-		push_int_stack(s, tos1-tos2);
+		int *tos1 = pop_stack(s);
+		int *tos2 = pop_stack(s);
+		int *n = malloc(sizeof(int));
+		*n = (*tos1)-(*tos2);
+		push_stack(s, n);
 	} else if (strcmp(n, "*") == 0) {
-		int tos1 = pop_int_stack(s);
-		int tos2 = pop_int_stack(s);
-		push_int_stack(s, tos1*tos2);
+		int *tos1 = pop_stack(s);
+		int *tos2 = pop_stack(s);
+		int *n = malloc(sizeof(int));
+		*n = (*tos1)*(*tos2);
+		push_stack(s, n);
 	} else if (strcmp(n, "/") == 0) {
-		int tos1 = pop_int_stack(s);
-		int tos2 = pop_int_stack(s);
-		push_int_stack(s, tos1/tos2);
+		int *tos1 = pop_stack(s);
+		int *tos2 = pop_stack(s);
+		int *n = malloc(sizeof(int));
+		*n = (*tos1)/(*tos2);
+		push_stack(s, n);
 	} else if (strcmp(n, ":") == 0) {
 		(*compiling) = true;
 		char *string;
@@ -67,6 +82,12 @@ void execute_default_word(dictionary* d, dict_node *node, int_stack *s, bool *co
 	} else if (strcmp(n, ";") == 0) {
 		(*compiling) = false;
 		//add exit to data on word (maybe not? i'm not 100% on how I have implemented this language)
+	} else if (strcmp(n, "=") == 0) { 
+		int *tos1 = pop_stack(s);
+		int *tos2 = pop_stack(s);
+		int *n = malloc(sizeof(int));
+		*n = (*tos1) == (*tos2); //int because pushing to int stack but it could be bool
+		push_stack(s, n);
 	} else {
 		printf("default word called that has not been implemented\n");
 	}

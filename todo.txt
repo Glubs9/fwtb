@@ -1,8 +1,12 @@
-	- merge int_stack and call_stack
-	- there is a suprising similarity between call_stack and user_code
-		- maybe we could implement user_code as a call_stack and merge the main call_stack
+god damn it
+	- turns out that I have corrupted call stack at some point
+	- or corrupted the heap????????!??!?!??!???!
+
+	- merge stack and stack
+	- there is a suprising similarity between stack and user_code
+		- maybe we could implement user_code as a stack and merge the main stack
 		and user_code whenever we encounter it, that would kinda work actually
-	- remove the idea of an int_stack and just have everything as words, even number literals
+	- remove the idea of an stack and just have everything as words, even number literals
 		- that way we don't have to write tonnes of code handling numbers just in case
 		- migrate everything ovre to what is done in interp.c
 	- this project is already a mess :(
@@ -24,3 +28,4 @@
 	- figure out how macros work and implement them
 	- control flow
 	- add error messages
+

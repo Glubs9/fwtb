@@ -1,13 +1,16 @@
 #include <stdlib.h> //might not be used, delete if unecersrarry
 #include <stdio.h> //debugging, delete later
 #include "../dictionary/user_code.h"
-#include "../call_stack/call_stack.h"
+#include "../stack/stack.h"
 
-void execute_user_code(dict_node *dn, call_stack *cs) 
+void execute_user_code(dict_node *dn, stack *call_stack) 
 {
 	user_code *uc;
 	uc = extract_user_code(dn);
-	for (int i = 0; i < uc->size; i++) {
-		push_call_stack(cs, uc->words[i]);
+	for (int i = uc->size-1; i >= 0; i++) {
+		printf("pushing to stack \n");
+		push_stack(call_stack, uc->words[i]);
+		printf("pushed to call stack\n");
 	}
+	printf("before printing call stack\n");
 }

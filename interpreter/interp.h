@@ -2,8 +2,8 @@
 #define INTERP
 
 #include "../dictionary/dictionary.h"
-#include "../int_stack/int_stack.h"
+#include "../stack/stack.h"
 
-void interpret(dictionary *d, int_stack *s);
+void interpret(dictionary *d, stack *s);
 
 #endif
