@@ -28,7 +28,8 @@ bool is_default_word(dict_node *node)
 		strcmp(n, "CREATE") == 0 ||
 		strcmp(n, "DOES>") == 0 ||
 		strcmp(n, ":") == 0 ||
-		strcmp(n, ";") == 0
+		strcmp(n, ";") == 0 ||
+		strcmp(n, "=") == 0
 	);
 }
 
@@ -67,6 +68,10 @@ void execute_default_word(dictionary* d, dict_node *node, int_stack *s, bool *co
 	} else if (strcmp(n, ";") == 0) {
 		(*compiling) = false;
 		//add exit to data on word (maybe not? i'm not 100% on how I have implemented this language)
+	} else if (strcmp(n, "=") == 0) { 
+		int tos1 = pop_int_stack(s);
+		int tos2 = pop_int_stack(s);
+		push_int_stack(s, tos1==tos2);
 	} else {
 		printf("default word called that has not been implemented\n");
 	}

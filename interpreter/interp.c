@@ -15,8 +15,8 @@
 void interpret(dictionary *d, int_stack *s) {
 	dict_node *word;
 	bool compiling = false;
-	call_stack *c;
-	c = init_call_stack();
+	stack *call_stack;
+	c = init_stack();
 
 	while (words_left() || (!call_stack_empty(c))) {
 		if (call_stack_empty(c)) {
