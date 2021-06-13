@@ -18,6 +18,7 @@ bool is_default_word(dict_node *node)
 	char *n = node->name;
 	return (
 		strcmp(n, ".") == 0 ||
+		strcmp(n, "EMIT") == 0 ||
 		strcmp(n, ".s") == 0 ||
 		strcmp(n, "+") == 0 ||
 		strcmp(n, "-") == 0 ||
@@ -29,7 +30,7 @@ bool is_default_word(dict_node *node)
 		strcmp(n, "DOES>") == 0 ||
 		strcmp(n, ":") == 0 ||
 		strcmp(n, ";") == 0 ||
-		strcmp(n, "=") == 0
+		strcmp(n, "=") == 0 
 	);
 }
 
@@ -40,6 +41,9 @@ void execute_default_word(dictionary* d, dict_node *node, stack *s, bool *compil
 	if (strcmp(n, ".") == 0) {
 		int *n = pop_stack(s); //free?
 		printf("%d\n", (*n));
+	} else if (strcmp(n, "EMIT") == 0) {
+		char *n = (char*) pop_stack(s);
+		printf("%c\n", (*n));
 	} else if (strcmp(n, ".s") == 0) {
 		//maybe I should put this somewhere else but tbh I can't be bothered
 		for (int i = 0; i < s->head; i++) {

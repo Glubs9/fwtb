@@ -26,10 +26,16 @@ void push_word(dictionary *dict, char name[MAX_NAME_LENGTH], void *data, enum no
 dict_node* _search_dict(dict_node *dn, char *name)
 {
 	if (dn == (dict_node*) -1) { //end of linked list
+		//i feel i should separate this logic out into a separate function
 		dict_node *dn = malloc(sizeof(dict_node)); //create and return numeric word
 		strcpy(dn->name, name);
-		char *p; //wtf?
-		int n = strtol(name, &p, 10);
+		int n;
+		if (name[0] == 39) { //if input is a character i.e: name == "'*'"
+			n = name[1];
+		} else { //if input is a straight number
+			char *p; //wtf?
+			n = strtol(name, &p, 10);
+		}
 		int *n2 = malloc(sizeof(int));
 		(*n2) = n; //weird funky memory stuff because c
 		dn->data = n2;
