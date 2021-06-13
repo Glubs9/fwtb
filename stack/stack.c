@@ -1,5 +1,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
+#include <stdio.h>
+#include <errno.h>
 #include "stack.h"
 
 stack* init_stack()
@@ -19,8 +21,13 @@ void push_stack(stack *s, void* add)
 
 void *pop_stack(stack *s)
 {
-	s->head--;
-	return *(s->stack + s->head); //shifted away from using array operators cause memoery?
+	if (s->head != 0) {
+		s->head--;
+		return *(s->stack + s->head); //shifted away from using array operators cause memoery?
+	}
+	printf("ERROR: POPPPED EMPTY STACK\n"); //maybe print call stack?
+	errno = 12;
+	exit(EXIT_FAILURE);
 }
 
 bool stack_empty(stack *s)
