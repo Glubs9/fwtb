@@ -1,8 +1,19 @@
 	- there is a suprising similarity between stack and user_code
 		- maybe we could implement user_code as a stack and merge the main stack
 		and user_code whenever we encounter it, that would kinda work actually
-	- figure out how macros work and implement them
-	- control flow
-	- add error messages
-	- error check memory allocation 
+	- add more error messages
+		- word not found
+		- ...
 	- add variables and the like
+		- first write create
+		- then write ,
+	- add macros
+		- write immediate (which should just change previous definition node_type to immediate)
+	- create a stdlib
+		- which defines variable and constant using create macro
+	- control flow
+		- how
+	- handle loading files
+	- ????
+	- profit / we should be done?
+	- build it out to fit the forth standard
