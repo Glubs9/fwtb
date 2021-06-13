@@ -38,17 +38,17 @@ void execute_default_word(dictionary* d, dict_node *node, stack *s, bool *compil
 	//wish switch statement worked on strings
 	char *n = node->name;
 	if (strcmp(n, ".") == 0) {
-		int *n = pop_stack(s);
+		int *n = pop_stack(s); //free?
 		printf("%d\n", (*n));
 	} else if (strcmp(n, ".s") == 0) {
 		//maybe I should put this somewhere else but tbh I can't be bothered
 		for (int i = 0; i < s->head; i++) {
 			int *n = s->stack[i];
-			printf("%d ", *n); //deallocated before
+			printf("%d ", *n);
 		}
 		printf("\n");
 	} else if (strcmp(n, "+") == 0) {
-		int *tos1 = pop_stack(s);
+		int *tos1 = pop_stack(s); //do we have to free?
 		int *tos2 = pop_stack(s);
 		int *n = malloc(sizeof(int));
 		*n = (*tos1)+(*tos2);

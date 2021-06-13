@@ -7,20 +7,19 @@
 #include "../dictionary/user_code.h"
 
 //ok so I seem to haev made a mistake with user input but to be honest I don't really mind all that
-//much
-	//the issue is that I have to deal with two stacks (one call and one input) instead of just
-	//one stack and this is gonna make everything an ightmare but whatever right?
 void interpret(dictionary *d, stack *s) {
 	dict_node *word;
 	bool compiling = false;
 	stack *call_stack;
 	call_stack = init_stack();
 	char *tmp_string;
+	user_code *uc;
 
 	while (words_left() || (!stack_empty(call_stack))) {
 		if (stack_empty(call_stack)) {
 			tmp_string = get_word();
 			word = search_dict(d, tmp_string);
+			free(tmp_string); //i don't know where to put my free stuff so I put it here
 		} else {
 			word = pop_stack(call_stack);
 		}
@@ -29,7 +28,6 @@ void interpret(dictionary *d, stack *s) {
 			//add to current word definition
 			//(this feels weird to put in the loop, maybe move to a separate file?)
 			dict_node *top = d->head;
-			user_code *uc;
 			uc = extract_user_code(top);
 			push_user_code(uc, word); //hopefully works? (it does :)
 		} else {
