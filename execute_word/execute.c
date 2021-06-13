@@ -15,6 +15,8 @@ void execute_word(dictionary *d, dict_node *dn, stack *s, bool *compiling, bool 
 		execute_user_immediate(d, dn, call_stack);
 	} else if (dn->node_type == number) {
 		execute_number_word(s, dn);
+	} else if (dn->node_type == data) {
+		push_stack(s, dn->data); //push stack feels weird not being in it's own file but tbh it's too late to care (this push does mean that the stack contains (int*) and (void*) but whatever)
 	} else {
 		//for immediate words I might just be able to execute_code ?
 		printf("this kind of node type has not yet been implemented\n");
