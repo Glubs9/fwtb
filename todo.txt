@@ -5,3 +5,4 @@
 	- control flow
 	- add error messages
 	- error check memory allocation 
+	- add variables and the like
