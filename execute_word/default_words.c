@@ -31,11 +31,14 @@ bool is_default_word(dict_node *node)
 		strcmp(n, ":") == 0 ||
 		strcmp(n, ";") == 0 ||
 		strcmp(n, "=") == 0 ||
-		strcmp(n, "CREATE") == 0
+		strcmp(n, "CREATE") == 0 ||
+		strcmp(n, "IMMEDIATE") == 0 ||
+		strcmp(n, "ENTER_IMMEDIATE") == 0 || //used to set interpreter flag immediate to true
+		strcmp(n, "EXIT_IMMEDIATE") == 0
 	);
 }
 
-void execute_default_word(dictionary* d, dict_node *node, stack *s, bool *compiling, stack *call_stack)
+void execute_default_word(dictionary* d, dict_node *node, stack *s, bool *compiling, bool *immediate_b, stack *call_stack)
 {
 	//wish switch statement worked on strings
 	char *n = node->name;
@@ -93,10 +96,16 @@ void execute_default_word(dictionary* d, dict_node *node, stack *s, bool *compil
 		int *n = malloc(sizeof(int));
 		*n = (*tos1) == (*tos2); //int because pushing to int stack but it could be bool
 		push_stack(s, n);
-	else if (strcmp(n, "CREATE") == 0) {
+	} else if (strcmp(n, "CREATE") == 0) {
 		char *string;
 		string = get_word();
-		push_word(d, string, NULL, data);
+		push_word(d, string, NULL, code);
+	} else if (strcmp(n, "IMMEDIATE") == 0) {
+		d->head->node_type = immediate;
+	} else if (strcmp(n, "ENTER_IMMEDIATE") == 0) {
+		*immediate_b = true;
+	} else if (strcmp(n, "EXIT_IMMEDIATE") == 0) {
+		*immediate_b = false;
 	} else {
 		printf("default word called that has not been implemented\n");
 	}
@@ -119,4 +128,6 @@ void add_default_words(dictionary *d)
 	push_word(d, ":", data, nt);
 	push_word(d, ";", data, immediate);
 	push_word(d, "CREATE", data, nt);
+	push_word(d, "ENTER_IMMEDIATE", data, immediate);
+	push_word(d, "EXIT_IMMEDIATE", data, nt); //not immediate because we should be in immediate mode at the time
 }

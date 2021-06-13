@@ -14,6 +14,7 @@ void interpret(dictionary *d, stack *s) {
 	call_stack = init_stack();
 	char *tmp_string;
 	user_code *uc;
+	bool immediate_b = false;
 
 	while (words_left() || (!stack_empty(call_stack))) {
 		if (stack_empty(call_stack)) {
@@ -24,14 +25,14 @@ void interpret(dictionary *d, stack *s) {
 			word = pop_stack(call_stack);
 		}
 
-		if (compiling && word->node_type != immediate) {
+		if (compiling && (word->node_type != immediate) && (!immediate_b)) {
 			//add to current word definition
 			//(this feels weird to put in the loop, maybe move to a separate file?)
 			dict_node *top = d->head;
 			uc = extract_user_code(top);
 			push_user_code(uc, word); //hopefully works? (it does :)
 		} else {
-			execute_word(d, word, s, &compiling, call_stack);
+			execute_word(d, word, s, &compiling, &immediate_b, call_stack);
 		}
 	}
 
