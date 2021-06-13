@@ -30,7 +30,8 @@ bool is_default_word(dict_node *node)
 		strcmp(n, "DOES>") == 0 ||
 		strcmp(n, ":") == 0 ||
 		strcmp(n, ";") == 0 ||
-		strcmp(n, "=") == 0 
+		strcmp(n, "=") == 0 ||
+		strcmp(n, "CREATE") == 0
 	);
 }
 
@@ -92,6 +93,10 @@ void execute_default_word(dictionary* d, dict_node *node, stack *s, bool *compil
 		int *n = malloc(sizeof(int));
 		*n = (*tos1) == (*tos2); //int because pushing to int stack but it could be bool
 		push_stack(s, n);
+	else if (strcmp(n, "CREATE") == 0) {
+		char *string;
+		string = get_word();
+		push_word(d, string, NULL, data);
 	} else {
 		printf("default word called that has not been implemented\n");
 	}
@@ -113,4 +118,5 @@ void add_default_words(dictionary *d)
 	push_word(d, "DOES>", data, nt);
 	push_word(d, ":", data, nt);
 	push_word(d, ";", data, immediate);
+	push_word(d, "CREATE", data, nt);
 }
