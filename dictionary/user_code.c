@@ -9,6 +9,7 @@ user_code *init_user_code()
 	user_code *uc = malloc(sizeof(user_code));
 	uc->size = 0;
 	uc->words = malloc(sizeof(dict_node*) * 1);
+	return uc;
 }
 
 user_code* extract_user_code(dict_node *dn)

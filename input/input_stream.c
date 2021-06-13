@@ -32,6 +32,7 @@ bool words_left()
 
 void new_stream(FILE *s)
 {
+	fclose(stream);
 	stream = s;
 	end_reached = false;
 }
@@ -39,7 +40,7 @@ void new_stream(FILE *s)
 //useful for getting new line input from stdin
 void force_continue()
 {
-	end_reached = false; 
+	end_reached = false;
 }
 
 void setup_input()
