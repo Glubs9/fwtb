@@ -20,9 +20,6 @@ void execute_user_code(dict_node *dn, stack *call_stack)
 	uc = extract_user_code(dn); //is this is a pointer?
 	//print_debug(uc);
 	for (int i = uc->size-1; i >= 0; i--) {
-		printf("pushing to stack \n");
 		push_stack(call_stack, uc->words[i]);
-		printf("pushed to call stack\n");
 	}
-	printf("before printing call stack\n");
 }

@@ -1,3 +1,5 @@
+#include <stdlib.h>
+
 #include "dictionary/dictionary.h"
 #include "input/input_stream.h"
 #include "execute_word/execute.h"

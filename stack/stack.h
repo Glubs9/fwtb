@@ -6,7 +6,6 @@
 typedef struct stack {
 	void **stack;
 	int head;
-	int allocated_head;
 } stack;
 
 stack* init_stack();
