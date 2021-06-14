@@ -17,3 +17,5 @@
 	- ????
 	- profit / we should be done?
 	- build it out to fit the forth standard
+	- add ok to end of gforth stdout
+	- add \n to end of word output because gforth doesn't print newline for each .

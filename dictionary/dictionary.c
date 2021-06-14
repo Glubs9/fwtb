@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h> //only for debugging, remove later
 #include <string.h>
+#include <errno.h>
+
 #include "dictionary.h"
 #include "CONSTANTS.h"
 
@@ -33,8 +35,14 @@ dict_node* _search_dict(dict_node *dn, char *name)
 		if (name[0] == 39) { //if input is a character i.e: name == "'*'"
 			n = name[1];
 		} else { //if input is a straight number
+			//feels like i should move this logic
 			char *p; //wtf?
 			n = strtol(name, &p, 10);
+			if (name == p) {
+				printf("ERROR: WORD NOT FOUND %s\n", name);
+				errno = 5; //check value is the right value
+				exit(EXIT_FAILURE);
+			}
 		}
 		int *n2 = malloc(sizeof(int));
 		(*n2) = n; //weird funky memory stuff because c
