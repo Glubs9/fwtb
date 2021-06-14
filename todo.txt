@@ -2,8 +2,7 @@
 		- maybe we could implement user_code as a stack and merge the main stack
 		and user_code whenever we encounter it, that would kinda work actually
 	- add more error messages
-		- word not found
-		- ...
+		- (not sure what but I have left this here just in case)
 	- add variables and the like
 		- first write create
 		- then write ,
@@ -12,10 +11,13 @@
 	- create a stdlib
 		- which defines variable and constant using create macro
 	- control flow
-		- how
+		- how (something to do with dest and origin?)
 	- handle loading files
 	- ????
 	- profit / we should be done?
 	- build it out to fit the forth standard
 	- add ok to end of gforth stdout
 	- add \n to end of word output because gforth doesn't print newline for each .
+	- handle printing things from the stack that aren't ints
+		- maybe i have to deal with making the stack take dict_nodes and dereferencing the
+		number from it rather than pushing an int pointer instead
