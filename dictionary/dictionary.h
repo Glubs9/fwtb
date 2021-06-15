@@ -24,6 +24,6 @@ typedef struct dictionary {
 dictionary* init_dict();
 void push_word(dictionary *dict, char name[MAX_NAME_LENGTH], void *data, enum node_type nt);
 dict_node* search_dict(dictionary *dict, char *name);
-void print_dict(dictionary *d);
+void print_dict(dictionary *d); //maybe delete?
 
 #endif

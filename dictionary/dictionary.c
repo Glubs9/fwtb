@@ -27,7 +27,7 @@ void push_word(dictionary *dict, char name[MAX_NAME_LENGTH], void *data, enum no
 //recursive call for search_dict
 dict_node* _search_dict(dict_node *dn, char *name)
 {
-	if (dn == (dict_node*) -1) { //end of linked list
+	if (dn == (dict_node*) -1) { //end of linked list (should be null)
 		//i feel i should separate this logic out into a separate function
 		dict_node *dn = malloc(sizeof(dict_node)); //create and return numeric word
 		strcpy(dn->name, name);
@@ -52,7 +52,7 @@ dict_node* _search_dict(dict_node *dn, char *name)
 	} else if (strcmp(dn->name, name) == 0) {
 		return dn;
 	} else {
-		_search_dict(dn->prev, name);
+		return _search_dict(dn->prev, name);
 	}
 }
 

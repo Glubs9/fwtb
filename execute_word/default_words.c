@@ -26,17 +26,16 @@ bool is_default_word(dict_node *node)
 		strcmp(n, "/") == 0 ||
 		strcmp(n, "@") == 0 || //instructions here and below are not implemented yet
 		strcmp(n, "!") == 0 ||
-		strcmp(n, "CREATE") == 0 ||
 		strcmp(n, "DOES>") == 0 ||
 		strcmp(n, ":") == 0 ||
 		strcmp(n, ";") == 0 ||
 		strcmp(n, "=") == 0 ||
-		strcmp(n, "CREATE") == 0 ||
 		strcmp(n, "IMMEDIATE") == 0 ||
 		strcmp(n, "ENTER_IMMEDIATE") == 0 || //used to set interpreter flag immediate to true
 		strcmp(n, "EXIT_IMMEDIATE") == 0 ||
-		strcmp(n, "@") == 0 ||
-		strcmp(n, "!") == 0
+		strcmp(n, "CREATE") == 0 ||
+		strcmp(n, "!") == 0 ||
+		strcmp(n, "@") == 0 
 	);
 }
 
@@ -53,7 +52,7 @@ void execute_default_word(dictionary* d, dict_node *node, stack *s, bool *compil
 	} else if (strcmp(n, ".s") == 0) {
 		//maybe I should put this somewhere else but tbh I can't be bothered
 		for (int i = 0; i < s->head; i++) {
-			int *n = s->stack[i];
+			int *n = s->stack[i]; //this is causing issue with stuff on stack that is not int
 			printf("%d ", *n);
 		}
 		printf("\n");
@@ -98,26 +97,26 @@ void execute_default_word(dictionary* d, dict_node *node, stack *s, bool *compil
 		int *n = malloc(sizeof(int));
 		*n = (*tos1) == (*tos2); //int because pushing to int stack but it could be bool
 		push_stack(s, n);
-	} else if (strcmp(n, "CREATE") == 0) {
-		char *string;
-		string = get_word();
-		push_word(d, string, NULL, data);
 	} else if (strcmp(n, "IMMEDIATE") == 0) {
 		d->head->node_type = immediate;
 	} else if (strcmp(n, "ENTER_IMMEDIATE") == 0) {
 		*immediate_b = true;
 	} else if (strcmp(n, "EXIT_IMMEDIATE") == 0) {
 		*immediate_b = false;
+	} else if (strcmp(n, "CREATE") == 0) {
+		char *string;
+		string = get_word();
+		int *v = malloc(sizeof(int) * 1); //allocate variable space
+		push_word(d, string, v, data);
 	} else if (strcmp(n, "@") == 0) {
-		void *tos = pop_stack(s); //top of stack points to int
-		int *ans = (int*) tos; //pointer points to pointer containing int?
-		push_stack(s, *ans);
+		int *tos = pop_stack(s); //top of stack points to int
+		int *tmp = malloc(sizeof(int)); //copying value
+		*tmp = *tos;
+		push_stack(s, tmp); //kinda weird because I don't have to dereference anything
 	} else if (strcmp(n, "!") == 0) { 
 		int *tos1 = pop_stack(s);
-		int *addr; 
-		*addr = *tos1;
 		int *tos2 = pop_stack(s);
-		*addr = *tos2;
+		*tos1 = *tos2; //maybe?
 	} else {
 		printf("default word called that has not been implemented\n");
 	}
@@ -128,6 +127,7 @@ void add_default_words(dictionary *d)
 	enum node_type nt = code;
 	void *data = NULL; //do I have to allocate (data should be empty? but in real forth this is a machine code whatever)
 	push_word(d, ".", data, nt); //maybe using the same data is causing this error
+	push_word(d, "EMIT", data, nt);
 	push_word(d, ".s", data, nt);
 	push_word(d, "+", data, nt);
 	push_word(d, "-", data, nt);
@@ -135,13 +135,13 @@ void add_default_words(dictionary *d)
 	push_word(d, "/", data, nt);
 	push_word(d, "@", data, nt);
 	push_word(d, "!", data, nt);
-	push_word(d, "CREATE", data, nt);
 	push_word(d, "DOES>", data, nt);
 	push_word(d, ":", data, nt);
 	push_word(d, ";", data, immediate);
-	push_word(d, "CREATE", data, nt);
+	push_word(d, "IMMEDIATE", data, nt);
 	push_word(d, "ENTER_IMMEDIATE", data, immediate);
 	push_word(d, "EXIT_IMMEDIATE", data, nt); //not immediate because we should be in immediate mode at the time
-	push_word(d, "@", data, nt);
+	push_word(d, "CREATE", data, nt);
 	push_word(d, "!", data, nt);
+	push_word(d, "@", data, nt);
 }
