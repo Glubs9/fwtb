@@ -126,15 +126,14 @@ void execute_default_word(dictionary* d, dict_node *node, stack *s, bool *compil
 		int *v = malloc(sizeof(int) * 1); //allocate variable space
 		push_word(d, string, v, data);
 	} else if (strcmp(n, "@") == 0) {
-		int *d = malloc(sizeof(int));
-		*d = eps(s); //top of stack points to int
-		dict_node *dn = create_dict_node("var_num", d, number, NULL);
-		push_stack(s, d); //kinda weird because I don't have to dereference anything
+		//idk I shouldn't need anything for now (maybe just clone it and switch type to
+		//number but like what else? maybe something to do with arrays)
 	} else if (strcmp(n, "!") == 0) { 
 		dict_node *tos1 = pop_stack(s);
+		int *n = tos1->data;
 		int *tos2 = malloc(sizeof(int));
 		*tos2 = eps(s);
-		tos1->data = *tos2; //maybe? (makes sense to me)
+		tos1->data = tos2; //maybe? (makes sense to me)
 	} else {
 		printf("default word called that has not been implemented\n");
 	}

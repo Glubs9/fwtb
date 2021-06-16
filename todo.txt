@@ -7,7 +7,8 @@
 		- first write create
 		- then write ,
 	- add macros
-		- write immediate (which should just change previous definition node_type to immediate)
+		- more macro support
+		- things like quoting and the like
 	- create a stdlib
 		- which defines variable and constant using create macro
 	- control flow
