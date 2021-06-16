@@ -13,14 +13,20 @@ dictionary* init_dict()
 	return ret;
 }
 
-//feels a little weird? and unecersarry?
-void push_word(dictionary *dict, char name[MAX_NAME_LENGTH], void *data, enum node_type nt)
+dict_node* create_dict_node(char name[MAX_NAME_LENGTH], void *data, enum node_type nt, dict_node *prev)
 {
 	dict_node *dn = malloc(sizeof(dict_node));
 	strcpy(dn->name, name); //strcpy?
 	dn->data = data;
 	dn->node_type = nt;
-	dn->prev = dict->head;
+	dn->prev = prev;
+	return dn;
+}
+
+//feels a little weird? and unecersarry?
+void push_word(dictionary *dict, char name[MAX_NAME_LENGTH], void *data, enum node_type nt)
+{
+	dict_node *dn = create_dict_node(name, data, nt, dict->head);
 	dict->head = dn;
 }
 

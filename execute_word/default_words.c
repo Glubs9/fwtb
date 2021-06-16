@@ -39,47 +39,64 @@ bool is_default_word(dict_node *node)
 	);
 }
 
+int extract_int(dict_node *dn)
+{
+	int *n = dn->data;
+	return *n;
+}
+
+//short hand for writing extract int from top of stack (e.p.s == extract pop stack)
+int eps(stack *s)
+{
+	return extract_int(pop_stack(s));
+}
+
+//TOOD: fix shadowing input char *n and int n in this function.
 void execute_default_word(dictionary* d, dict_node *node, stack *s, bool *compiling, bool *immediate_b, stack *call_stack)
 {
 	//wish switch statement worked on strings
 	char *n = node->name;
 	if (strcmp(n, ".") == 0) {
-		int *n = pop_stack(s); //free?
-		printf("%d\n", (*n));
+		int n = eps(s);
+		printf("%d\n", n);
 	} else if (strcmp(n, "EMIT") == 0) {
-		char *n = (char*) pop_stack(s);
-		printf("%c\n", (*n));
+		char n = eps(s);
+		printf("%c\n", n);
 	} else if (strcmp(n, ".s") == 0) {
 		//maybe I should put this somewhere else but tbh I can't be bothered
 		for (int i = 0; i < s->head; i++) {
-			int *n = s->stack[i]; //this is causing issue with stuff on stack that is not int
-			printf("%d ", *n);
+			int n = extract_int(s->stack[i]); //this is causing issue with stuff on stack that is not int
+			printf("%d ", n);
 		}
 		printf("\n");
 	} else if (strcmp(n, "+") == 0) {
-		int *tos1 = pop_stack(s); //do we have to free?
-		int *tos2 = pop_stack(s);
+		int tos1 = eps(s); //do we have to free?
+		int tos2 = eps(s);
 		int *n = malloc(sizeof(int));
-		*n = (*tos1)+(*tos2);
-		push_stack(s, n);
+		*n = tos1+tos2;
+		dict_node *dn = create_dict_node("add_num", n, number, NULL); //change name later? (with like format string or something)
+		push_stack(s, dn);
 	} else if (strcmp(n, "-") == 0) {
-		int *tos1 = pop_stack(s);
-		int *tos2 = pop_stack(s);
+		int tos1 = eps(s); //do we have to free?
+		int tos2 = eps(s);
 		int *n = malloc(sizeof(int));
-		*n = (*tos1)-(*tos2);
-		push_stack(s, n);
+		*n = tos1-tos2;
+		dict_node *dn = create_dict_node("add_num", n, number, NULL); //change name later? (with like format string or something)
+		push_stack(s, dn);
 	} else if (strcmp(n, "*") == 0) {
-		int *tos1 = pop_stack(s);
-		int *tos2 = pop_stack(s);
+		int tos1 = eps(s); //do we have to free?
+		int tos2 = eps(s);
 		int *n = malloc(sizeof(int));
-		*n = (*tos1)*(*tos2);
-		push_stack(s, n);
+		*n = tos1*tos2;
+		dict_node *dn = create_dict_node("add_num", n, number, NULL); //change name later? (with like format string or something)
+		push_stack(s, dn);
 	} else if (strcmp(n, "/") == 0) {
-		int *tos1 = pop_stack(s);
-		int *tos2 = pop_stack(s);
+		int tos1 = eps(s); //do we have to free?
+		int tos2 = eps(s);
 		int *n = malloc(sizeof(int));
-		*n = (*tos1)/(*tos2);
-		push_stack(s, n);
+		*n = tos1/tos2;
+		dict_node *dn = create_dict_node("add_num", n, number, NULL); //change name later? (with like format string or something)
+		push_stack(s, dn);
 	} else if (strcmp(n, ":") == 0) {
 		(*compiling) = true;
 		char *string;
@@ -92,11 +109,11 @@ void execute_default_word(dictionary* d, dict_node *node, stack *s, bool *compil
 		(*compiling) = false;
 		//add exit to data on word (maybe not? i'm not 100% on how I have implemented this language)
 	} else if (strcmp(n, "=") == 0) { 
-		int *tos1 = pop_stack(s);
-		int *tos2 = pop_stack(s);
+		int tos1 = eps(s); //do we have to free?
+		int tos2 = eps(s);
 		int *n = malloc(sizeof(int));
-		*n = (*tos1) == (*tos2); //int because pushing to int stack but it could be bool
-		push_stack(s, n);
+		*n = tos1==tos2;
+		dict_node *dn = create_dict_node("add_num", n, number, NULL); //change name later? (with like format string or something)
 	} else if (strcmp(n, "IMMEDIATE") == 0) {
 		d->head->node_type = immediate;
 	} else if (strcmp(n, "ENTER_IMMEDIATE") == 0) {
@@ -109,14 +126,15 @@ void execute_default_word(dictionary* d, dict_node *node, stack *s, bool *compil
 		int *v = malloc(sizeof(int) * 1); //allocate variable space
 		push_word(d, string, v, data);
 	} else if (strcmp(n, "@") == 0) {
-		int *tos = pop_stack(s); //top of stack points to int
-		int *tmp = malloc(sizeof(int)); //copying value
-		*tmp = *tos;
-		push_stack(s, tmp); //kinda weird because I don't have to dereference anything
+		int *d = malloc(sizeof(int));
+		*d = eps(s); //top of stack points to int
+		dict_node *dn = create_dict_node("var_num", d, number, NULL);
+		push_stack(s, d); //kinda weird because I don't have to dereference anything
 	} else if (strcmp(n, "!") == 0) { 
-		int *tos1 = pop_stack(s);
-		int *tos2 = pop_stack(s);
-		*tos1 = *tos2; //maybe?
+		dict_node *tos1 = pop_stack(s);
+		int *tos2 = malloc(sizeof(int));
+		*tos2 = eps(s);
+		tos1->data = *tos2; //maybe? (makes sense to me)
 	} else {
 		printf("default word called that has not been implemented\n");
 	}
