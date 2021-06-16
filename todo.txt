@@ -12,6 +12,7 @@
 		- which defines variable and constant using create macro
 	- control flow
 		- how (something to do with dest and origin?)
+	- add float stack
 	- handle loading files
 	- ????
 	- profit / we should be done?

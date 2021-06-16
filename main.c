@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h> //for stdin
 
 #include "dictionary/dictionary.h"
 #include "input/input_stream.h"
@@ -15,6 +16,10 @@ void setup(dictionary **d, stack **s)
 	//add stdlib here
 	*s = init_stack();
 	setup_input();
+	/*FILE *f = fopen("stdlib.fs", "r");
+	new_stream(f);
+	interpret(*d, *s);
+	new_stream(stdin); */
 }
 
 int main()

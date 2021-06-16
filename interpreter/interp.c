@@ -19,6 +19,11 @@ void interpret(dictionary *d, stack *s) {
 	while (words_left() || (!stack_empty(call_stack))) {
 		if (stack_empty(call_stack)) {
 			tmp_string = get_word();
+			/*if (tmp_string[0] == '\0') { //causing errors?
+				printf("in continue with %s\n", tmp_string);
+				break; //break is bad rip
+			}
+			printf("word passed %s\n", tmp_string);*/
 			word = search_dict(d, tmp_string);
 			free(tmp_string); //i don't know where to put my free stuff so I put it here
 		} else {

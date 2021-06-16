@@ -6,6 +6,5 @@
 //could probably just chuck this in execute.c
 void execute_number_word(stack *s, dict_node *dn)
 {
-	int *n = dn->data;
-	push_stack(s, n);
+	push_stack(s, dn); //doesn't really need to be here
 }

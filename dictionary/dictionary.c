@@ -13,21 +13,27 @@ dictionary* init_dict()
 	return ret;
 }
 
-//feels a little weird? and unecersarry?
-void push_word(dictionary *dict, char name[MAX_NAME_LENGTH], void *data, enum node_type nt)
+dict_node* create_dict_node(char name[MAX_NAME_LENGTH], void *data, enum node_type nt, dict_node *prev)
 {
 	dict_node *dn = malloc(sizeof(dict_node));
 	strcpy(dn->name, name); //strcpy?
 	dn->data = data;
 	dn->node_type = nt;
-	dn->prev = dict->head;
+	dn->prev = prev;
+	return dn;
+}
+
+//feels a little weird? and unecersarry?
+void push_word(dictionary *dict, char name[MAX_NAME_LENGTH], void *data, enum node_type nt)
+{
+	dict_node *dn = create_dict_node(name, data, nt, dict->head);
 	dict->head = dn;
 }
 
 //recursive call for search_dict
 dict_node* _search_dict(dict_node *dn, char *name)
 {
-	if (dn == (dict_node*) -1) { //end of linked list
+	if (dn == (dict_node*) -1) { //end of linked list (should be null)
 		//i feel i should separate this logic out into a separate function
 		dict_node *dn = malloc(sizeof(dict_node)); //create and return numeric word
 		strcpy(dn->name, name);
@@ -52,7 +58,7 @@ dict_node* _search_dict(dict_node *dn, char *name)
 	} else if (strcmp(dn->name, name) == 0) {
 		return dn;
 	} else {
-		_search_dict(dn->prev, name);
+		return _search_dict(dn->prev, name);
 	}
 }
 
