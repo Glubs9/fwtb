@@ -23,3 +23,5 @@
 	- handle printing things from the stack that aren't ints
 		- maybe i have to deal with making the stack take dict_nodes and dereferencing the
 		number from it rather than pushing an int pointer instead
+	- BUGFIX
+		- so many :(
