@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include <string.h>
+#include <errno.h>
 #include "input_stream.h"
 #include "CONSTANTS.h"
 
@@ -10,9 +11,15 @@ bool end_reached;
 
 char* get_word()
 {
+	if (end_reached) {
+		printf("get word called while end has been reached\n");
+		errno = 12; //maybe wrong error number?
+		exit(EXIT_FAILURE);
+	}
 	char *buff = malloc(sizeof(char) * MAX_WORD_LENGTH);
 	char c = fgetc(stream);
 	int head = 0;
+	//note: switch this loop to do while loop later
 	while (c != ' ' && c != '\t' && c != '\n' && c != EOF) {
 		buff[head] = c;
 		c = fgetc(stream);
@@ -30,9 +37,9 @@ bool words_left()
 	return !end_reached;
 }
 
+//add fflush
 void new_stream(FILE *s)
 {
-	fclose(stream);
 	stream = s;
 	end_reached = false;
 }
@@ -40,6 +47,7 @@ void new_stream(FILE *s)
 //useful for getting new line input from stdin
 void force_continue()
 {
+	//do something here
 	end_reached = false;
 }
 
