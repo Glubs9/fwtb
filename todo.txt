@@ -10,8 +10,7 @@
 	- add macros
 		- more macro support
 		- things like quoting and the like
-	- create a stdlib
-		- which defines variable and constant using create macro
+	- add to stdlib
 	- control flow
 		- how (something to do with dest and origin?)
 	- add float stack
