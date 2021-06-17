@@ -13,13 +13,13 @@ void setup(dictionary **d, stack **s)
 {
 	*d = init_dict();
 	add_default_words(*d);
-	//add stdlib here
 	*s = init_stack();
 	setup_input();
-	/*FILE *f = fopen("stdlib.fs", "r");
+	FILE *f = fopen("stdlib.fs", "r");
 	new_stream(f);
 	interpret(*d, *s);
-	new_stream(stdin); */
+	fclose(f);
+	new_stream(stdin);
 }
 
 int main()

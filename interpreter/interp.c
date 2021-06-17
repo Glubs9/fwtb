@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../dictionary/dictionary.h"
+#include "../dictionary/CONSTANTS.h"
 #include "../input/input_stream.h"
 #include "../execute_word/execute.h"
 #include "../dictionary/user_code.h"
@@ -19,11 +20,11 @@ void interpret(dictionary *d, stack *s) {
 	while (words_left() || (!stack_empty(call_stack))) {
 		if (stack_empty(call_stack)) {
 			tmp_string = get_word();
-			/*if (tmp_string[0] == '\0') { //causing errors?
-				printf("in continue with %s\n", tmp_string);
-				break; //break is bad rip
+			char *str = malloc(sizeof(char) * MAX_NAME_LENGTH); //sizeof(char) unecersarry 
+			strcpy(str, tmp_string);
+			if (strcmp(str, "") == 0) { //causing errors?
+				continue;
 			}
-			printf("word passed %s\n", tmp_string);*/
 			word = search_dict(d, tmp_string);
 			free(tmp_string); //i don't know where to put my free stuff so I put it here
 		} else {
