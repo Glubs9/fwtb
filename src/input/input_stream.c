@@ -74,6 +74,11 @@ void force_continue()
 	end_reached = false;
 }
 
+void force_end()
+{
+	end_reached = true;
+}
+
 void setup_input()
 {
 	stream = stdin;
@@ -90,3 +95,4 @@ void reset_end_char()
 {
 	using_custom_end_char = false;
 }
+
