@@ -41,14 +41,6 @@ bool is_default_word(dict_node *node)
 	);
 }
 
-int extract_int(dict_node *dn)
-{
-	int *n = malloc(sizeof(int));
-	int *tmp = dn->data;
-	*n = *tmp;
-	return *n; //is n a new variable?
-}
-
 //short hand for writing extract int from top of stack (e.p.s == extract pop stack)
 int eps(stack *s)
 {

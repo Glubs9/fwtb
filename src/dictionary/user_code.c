@@ -32,3 +32,11 @@ void print_user_code(user_code *uc)
 	}
 	printf("\n");
 }
+
+int extract_int(dict_node *dn)
+{
+	int *n = malloc(sizeof(int)); //unecersarry allocation, make sure to test tuck if this is changed
+	int *tmp = dn->data;
+	*n = *tmp;
+	return *n;
+}
