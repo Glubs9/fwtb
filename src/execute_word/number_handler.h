@@ -1,6 +1,7 @@
-#ifndef NUMBER_HANDLER
-#define NUMBER_HANDLER
+#ifndef __NUMBER_HANDLER__H
+#define __NUMBER_HANDLER__H
 
+#include "../stack/stack.h"
 #include "../dictionary/dictionary.h"
 
 void execute_number(stack *s, char *string);

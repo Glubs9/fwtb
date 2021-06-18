@@ -1,12 +1,10 @@
-#include <stdlib.h>
-#include <stdio.h> //for stdin
-
-#include "dictionary/dictionary.h"
-#include "input/input_stream.h"
-#include "execute_word/execute.h"
-#include "execute_word/default_words.h"
-#include "interpreter/interp.h"
-#include "stack/stack.h"
+#include <stdbool.h>					// for true
+#include <stdio.h>						// for printf, fclose, fopen
+#include "execute_word/default_words.h" // for add_default_words
+#include "input/input_stream.h"			// for new_stream, force_...
+#include "dictionary/dictionary.h"		// for init_dict, dictionary
+#include "interpreter/interp.h"			// for interpret
+#include "stack/stack.h"				// for init_stack, stack
 
 //this feels unecersarry
 void setup(dictionary **d, stack **s)
@@ -28,7 +26,8 @@ int main()
 	dictionary *d;
 	stack *s;
 	setup(&d, &s);
-	while (true) {
+	while (true)
+	{
 		printf("> ");
 		interpret(d, s);
 		printf("ok\n");
