@@ -25,6 +25,13 @@ void interpret(dictionary *d, stack *s) {
 			strcpy(str, tmp_string);
 			if (strcmp(str, "") == 0) { //causing errors?
 				continue;
+			} else if (strcmp(str, "(") == 0) {
+				//i feel like this should be moved to execute.c but honestly I am passing so many
+				//paramters to execute_word, maybe i should switch to using a struct to pass
+				new_custom_end_char(')');
+				get_word();
+				reset_end_char();
+				continue;
 			}
 			word = search_dict(d, tmp_string);
 			free(tmp_string); //i don't know where to put my free stuff so I put it here
@@ -32,13 +39,7 @@ void interpret(dictionary *d, stack *s) {
 			word = pop_stack(call_stack);
 		}
 
-		//i feel like this should be moved to execute.c but honestly I am passing so many
-		//paramters to execute_word, maybe i should switch to using a struct to pass
-		if (strcmp(word, "(")) {
-			new_custom_end_char(')');
-			get_word();
-			reset_end_char();
-		} else if (compiling && (word->node_type != immediate) && (!immediate_b)) {
+		if (compiling && (word->node_type != immediate) && (!immediate_b)) {
 			//add to current word definition
 			//(this feels weird to put in the loop, maybe move to a separate file?)
 			dict_node *top = d->head;

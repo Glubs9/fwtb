@@ -7,5 +7,5 @@ CREATE _tos2
 : over _tos1 ! _tos2 ! _tos2 @ _tos1 @ _tos2 @ ;
 CREATE _tos3
 : rot _tos1 ! _tos2 ! _tos3 ! _tos2 @ _tos1 @ _tos3 @ ;
-: nip swap drop ;
+: nip swap drop ; ( comment test )
 : tuck swap over ;
