@@ -1,10 +1,10 @@
-#ifndef INPUT_STREAM
-#define INPUT_STREAM
+#ifndef __INPUT_STREAM_H
+#define __INPUT_STREAM_H
 
-#include <stdbool.h>
-#include <stdio.h>
+#include <stdbool.h> // for bool
+#include <stdio.h>   // for FILE
 
-char* get_word();
+char *get_word();
 bool words_left();
 void new_stream(FILE *s);
 void setup_input();

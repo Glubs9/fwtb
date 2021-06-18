@@ -1,3 +1,5 @@
+#include "number_handler.h"
+
 #include "../stack/stack.h"
 #include "../dictionary/dictionary.h"
 

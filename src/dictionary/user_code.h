@@ -1,10 +1,11 @@
-#ifndef USERCODE
-#define USERCODE
+#ifndef __USERCODE_H
+#define __USERCODE_H
 
-#include "dictionary.h"
+#include "dictionary.h" // for dict_node
 
 //user defined code (stored in void* data in dict_node)
-typedef struct user_code {
+typedef struct user_code
+{
 	int size;
 	dict_node **words;
 } user_code;

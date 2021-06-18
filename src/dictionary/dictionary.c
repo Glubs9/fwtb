@@ -5,15 +5,16 @@
 
 #include "dictionary.h"
 #include "CONSTANTS.h"
+#include "CONSTANTS.h"
 
-dictionary* init_dict()
+dictionary *init_dict()
 {
 	dictionary *ret = malloc(sizeof(dictionary));
-	ret->head = (dict_node*) -1;
+	ret->head = (dict_node *)-1;
 	return ret;
 }
 
-dict_node* create_dict_node(char name[MAX_NAME_LENGTH], void *data, enum node_type nt, dict_node *prev)
+dict_node *create_dict_node(char name[MAX_NAME_LENGTH], void *data, enum node_type nt, dict_node *prev)
 {
 	dict_node *dn = malloc(sizeof(dict_node));
 	strcpy(dn->name, name); //strcpy?
@@ -31,20 +32,25 @@ void push_word(dictionary *dict, char name[MAX_NAME_LENGTH], void *data, enum no
 }
 
 //recursive call for search_dict
-dict_node* _search_dict(dict_node *dn, char *name)
+dict_node *_search_dict(dict_node *dn, char *name)
 {
-	if (dn == (dict_node*) -1) { //end of linked list (should be null)
+	if (dn == (dict_node *)-1)
+	{ //end of linked list (should be null)
 		//i feel i should separate this logic out into a separate function
 		dict_node *dn = malloc(sizeof(dict_node)); //create and return numeric word
 		strcpy(dn->name, name);
 		int n;
-		if (name[0] == 39) { //if input is a character i.e: name == "'*'"
+		if (name[0] == 39)
+		{ //if input is a character i.e: name == "'*'"
 			n = name[1];
-		} else { //if input is a straight number
+		}
+		else
+		{ //if input is a straight number
 			//feels like i should move this logic
 			char *p; //wtf?
 			n = strtol(name, &p, 10);
-			if (name == p) {
+			if (name == p)
+			{
 				printf("ERROR: WORD NOT FOUND %s\n", name);
 				errno = 5; //check value is the right value
 				exit(EXIT_FAILURE);
@@ -55,15 +61,19 @@ dict_node* _search_dict(dict_node *dn, char *name)
 		dn->data = n2;
 		dn->node_type = number;
 		return dn;
-	} else if (strcmp(dn->name, name) == 0) {
+	}
+	else if (strcmp(dn->name, name) == 0)
+	{
 		return dn;
-	} else {
+	}
+	else
+	{
 		return _search_dict(dn->prev, name);
 	}
 }
 
 //this kind of thing makes me feel that the dictionary object is a bit unecersarry
-dict_node* search_dict(dictionary *dict, char *name)
+dict_node *search_dict(dictionary *dict, char *name)
 {
 	return _search_dict(dict->head, name);
 }
@@ -71,9 +81,12 @@ dict_node* search_dict(dictionary *dict, char *name)
 //not printing?
 void _print_dict(dict_node *dn)
 {
-	if (dn == (dict_node*) -1) {
+	if (dn == (dict_node *)-1)
+	{
 		printf("\n");
-	} else {
+	}
+	else
+	{
 		printf("%s ", dn->name);
 		_print_dict(dn->prev);
 	}

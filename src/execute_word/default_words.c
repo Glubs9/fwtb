@@ -1,11 +1,12 @@
-#include <stdbool.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include "../dictionary/dictionary.h"
-#include "../dictionary/user_code.h"
-#include "../stack/stack.h"
-#include "../input/input_stream.h"
+#include "default_words.h"
+#include <stdbool.h>				  // for bool, false, true
+#include <stdio.h>					  // for printf, NULL
+#include <stdlib.h>					  // for malloc
+#include <string.h>					  // for strcmp
+#include "../dictionary/dictionary.h" // for push_word, create_dict_node
+#include "../dictionary/user_code.h"  // for init_user_code, user_code
+#include "../input/input_stream.h"	  // for get_word
+#include "../stack/stack.h"			  // for push_stack, pop_stack, stack
 
 //this file describes the execution of some default words
 
@@ -35,8 +36,7 @@ bool is_default_word(dict_node *node)
 		strcmp(n, "EXIT_IMMEDIATE") == 0 ||
 		strcmp(n, "CREATE") == 0 ||
 		strcmp(n, "!") == 0 ||
-		strcmp(n, "@") == 0 
-	);
+		strcmp(n, "@") == 0);
 }
 
 int extract_int(dict_node *dn)
@@ -54,92 +54,126 @@ int eps(stack *s)
 }
 
 //TOOD: fix shadowing input char *n and int n in this function.
-void execute_default_word(dictionary* d, dict_node *node, stack *s, bool *compiling, bool *immediate_b, stack *call_stack)
+void execute_default_word(dictionary *d, dict_node *node, stack *s, bool *compiling, bool *immediate_b, stack *call_stack)
 {
 	//wish switch statement worked on strings
 	char *n = node->name;
-	if (strcmp(n, ".") == 0) {
+	if (strcmp(n, ".") == 0)
+	{
 		int n = eps(s);
 		printf("%d\n", n);
-	} else if (strcmp(n, "EMIT") == 0) {
+	}
+	else if (strcmp(n, "EMIT") == 0)
+	{
 		char n = eps(s);
 		printf("%c\n", n);
-	} else if (strcmp(n, ".s") == 0) {
+	}
+	else if (strcmp(n, ".s") == 0)
+	{
 		//maybe I should put this somewhere else but tbh I can't be bothered
-		for (int i = 0; i < s->head; i++) {
+		for (int i = 0; i < s->head; i++)
+		{
 			int n = extract_int(s->stack[i]); //this is causing issue with stuff on stack that is not int
 			printf("%d ", n);
 		}
 		printf("\n");
-	} else if (strcmp(n, "+") == 0) {
+	}
+	else if (strcmp(n, "+") == 0)
+	{
 		int tos1 = eps(s); //do we have to free?
 		int tos2 = eps(s);
 		int *n = malloc(sizeof(int));
-		*n = tos1+tos2;
+		*n = tos1 + tos2;
 		dict_node *dn = create_dict_node("add_num", n, number, NULL); //change name later? (with like format string or something)
 		push_stack(s, dn);
-	} else if (strcmp(n, "-") == 0) {
+	}
+	else if (strcmp(n, "-") == 0)
+	{
 		int tos1 = eps(s); //do we have to free?
 		int tos2 = eps(s);
 		int *n = malloc(sizeof(int));
-		*n = tos1-tos2;
+		*n = tos1 - tos2;
 		dict_node *dn = create_dict_node("add_num", n, number, NULL); //change name later? (with like format string or something)
 		push_stack(s, dn);
-	} else if (strcmp(n, "*") == 0) {
+	}
+	else if (strcmp(n, "*") == 0)
+	{
 		int tos1 = eps(s); //do we have to free?
 		int tos2 = eps(s);
 		int *n = malloc(sizeof(int));
-		*n = tos1*tos2;
+		*n = tos1 * tos2;
 		dict_node *dn = create_dict_node("add_num", n, number, NULL); //change name later? (with like format string or something)
 		push_stack(s, dn);
-	} else if (strcmp(n, "/") == 0) {
+	}
+	else if (strcmp(n, "/") == 0)
+	{
 		int tos1 = eps(s); //do we have to free?
 		int tos2 = eps(s);
 		int *n = malloc(sizeof(int));
-		*n = tos1/tos2;
+		*n = tos1 / tos2;
 		dict_node *dn = create_dict_node("add_num", n, number, NULL); //change name later? (with like format string or something)
 		push_stack(s, dn);
-	} else if (strcmp(n, ":") == 0) {
+	}
+	else if (strcmp(n, ":") == 0)
+	{
 		(*compiling) = true;
 		char *string;
 		string = get_word(); //error check and maybe modularize later (also means definitions can't strech lines in repl)
 		//i feel i should have data = push self to stack but i can't be bothered with that right now
 		user_code *uc;
 		uc = init_user_code();
-		push_word(d, string, (void*) uc, code); //void* type cast might be unecersarry
-	} else if (strcmp(n, ";") == 0) {
+		push_word(d, string, (void *)uc, code); //void* type cast might be unecersarry
+	}
+	else if (strcmp(n, ";") == 0)
+	{
 		(*compiling) = false;
 		//add exit to data on word (maybe not? i'm not 100% on how I have implemented this language)
-	} else if (strcmp(n, "=") == 0) { 
+	}
+	else if (strcmp(n, "=") == 0)
+	{
 		int tos1 = eps(s); //do we have to free?
 		int tos2 = eps(s);
 		int *n = malloc(sizeof(int));
-		*n = tos1==tos2;
+		*n = tos1 == tos2;
 		dict_node *dn = create_dict_node("add_num", n, number, NULL); //change name later? (with like format string or something)
-	} else if (strcmp(n, "IMMEDIATE") == 0) {
+	}
+	else if (strcmp(n, "IMMEDIATE") == 0)
+	{
 		d->head->node_type = immediate;
-	} else if (strcmp(n, "ENTER_IMMEDIATE") == 0) {
+	}
+	else if (strcmp(n, "ENTER_IMMEDIATE") == 0)
+	{
 		*immediate_b = true;
-	} else if (strcmp(n, "EXIT_IMMEDIATE") == 0) {
+	}
+	else if (strcmp(n, "EXIT_IMMEDIATE") == 0)
+	{
 		*immediate_b = false;
-	} else if (strcmp(n, "CREATE") == 0) {
+	}
+	else if (strcmp(n, "CREATE") == 0)
+	{
 		char *string;
 		string = get_word();
 		int *v = malloc(sizeof(int) * 1); //allocate variable space
 		push_word(d, string, v, data);
-	} else if (strcmp(n, "@") == 0) {
+	}
+	else if (strcmp(n, "@") == 0)
+	{
 		dict_node *tos1 = pop_stack(s); //i feel like i should extract this logic for pushing new int onto stack somewhere else, it's too long and dry
 		int *v = malloc(sizeof(int));
 		*v = extract_int(tos1);
 		dict_node *copy = create_dict_node("@num", v, number, NULL);
 		push_stack(s, copy);
-	} else if (strcmp(n, "!") == 0) { 
+	}
+	else if (strcmp(n, "!") == 0)
+	{
 		dict_node *tos1 = pop_stack(s);
 		int *n = tos1->data;
 		int *tos2 = malloc(sizeof(int));
 		*tos2 = eps(s);
 		tos1->data = tos2; //maybe? (makes sense to me)
-	} else {
+	}
+	else
+	{
 		printf("default word called that has not been implemented\n");
 	}
 }
@@ -147,7 +181,7 @@ void execute_default_word(dictionary* d, dict_node *node, stack *s, bool *compil
 void add_default_words(dictionary *d)
 {
 	enum node_type nt = code;
-	void *data = NULL; //do I have to allocate (data should be empty? but in real forth this is a machine code whatever)
+	void *data = NULL;			 //do I have to allocate (data should be empty? but in real forth this is a machine code whatever)
 	push_word(d, ".", data, nt); //maybe using the same data is causing this error
 	push_word(d, "EMIT", data, nt);
 	push_word(d, ".s", data, nt);
