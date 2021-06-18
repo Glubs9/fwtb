@@ -6,3 +6,6 @@ I will add proper documentation when we get to a proper and mostly stable state.
 
 # Design Principles
 I wanted this to conform to the Forth standards and make it easier to create implementations of Forth (i.e: using structs to describe code rather than real machine code and not having all the Forth data and information in one block of memory).
+
+# to exit
+press ctrl+c (only tested on linux)

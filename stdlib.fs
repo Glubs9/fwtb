@@ -1,4 +1,4 @@
-: ? @ . ;
+: ? @ . :
 CREATE _tos1
 : dup _tos1 ! _tos1 @ _tos1 @ ;
 : drop _tos1 ! ;
