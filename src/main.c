@@ -30,7 +30,7 @@ int main()
 	{
 		printf("> ");
 		interpret(d, s);
-		printf("ok\n");
+		printf(" ok\n");
 		force_continue();
 	}
 }

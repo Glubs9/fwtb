@@ -55,22 +55,22 @@ void execute_default_word(dictionary *d, dict_node *node, stack *s, bool *compil
 	if (strcmp(n, ".") == 0)
 	{
 		int n = eps(s);
-		printf("%d\n", n);
+		printf("%d ", n);
 	}
 	else if (strcmp(n, "EMIT") == 0)
 	{
 		char n = eps(s);
-		printf("%c\n", n);
+		printf("%c", n); //no space
 	}
 	else if (strcmp(n, ".s") == 0)
 	{
 		//maybe I should put this somewhere else but tbh I can't be bothered
+		printf("<%d> ", s->head);
 		for (int i = 0; i < s->head; i++)
 		{
 			int n = extract_int(s->stack[i]); //this is causing issue with stuff on stack that is not int
 			printf("%d ", n);
 		}
-		printf("\n");
 	}
 	else if (strcmp(n, "+") == 0)
 	{
