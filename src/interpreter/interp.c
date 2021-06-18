@@ -41,5 +41,4 @@ void interpret(dictionary *d, stack *s) {
 			execute_word(d, word, s, &compiling, &immediate_b, call_stack);
 		}
 	}
-
 }
