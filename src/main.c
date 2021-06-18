@@ -22,7 +22,7 @@ void setup(dictionary **d, stack **s)
 
 int main()
 {
-	printf("welcome to forth with the boys\n\n");
+	printf("Welcome to Forth with the boys!\n\n");
 	dictionary *d;
 	stack *s;
 	setup(&d, &s);
