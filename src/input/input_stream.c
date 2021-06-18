@@ -1,19 +1,19 @@
-#include <stdio.h> 
-#include <stdlib.h>
-#include <stdbool.h>
-#include <string.h>
-#include <errno.h>
 #include "input_stream.h"
-#include "CONSTANTS.h"
+#include <errno.h>	   // for errno
+#include <stdbool.h>   // for false, bool, true
+#include <stdio.h>	   // for fgetc, printf, EOF, FILE, stdin
+#include <stdlib.h>	   // for exit, malloc, EXIT_FAILURE
+#include "CONSTANTS.h" // for MAX_WORD_LENGTH
 
 FILE *stream;
 bool end_reached;
 bool using_custom_end_char; //for when a custom end character is used instead of empty space
 char custom_end_char;
 
-char* get_word()
+char *get_word()
 {
-	if (end_reached) {
+	if (end_reached)
+	{
 		printf("get word called while end has been reached\n");
 		errno = 12; //maybe wrong error number?
 		exit(EXIT_FAILURE);
@@ -21,24 +21,36 @@ char* get_word()
 	char *buff = malloc(sizeof(char) * MAX_WORD_LENGTH);
 	char c = fgetc(stream);
 	int head = 0;
+
 	//this feels wrong, refactor later
-	if (using_custom_end_char) {
-		while (c != custom_end_char) {
-			buff[head] = c;
+	if (using_custom_end_char)
+	{
+		while (c != custom_end_char)
+		{
 			c = fgetc(stream);
+			buff[head] = c;
 			head++;
 		}
-	} else {
+	}
+	else
+	{
 		//note: switch this loop to do while loop later
-		while (c != ' ' && c != '\t' && c != '\n' && c != EOF) {
+		while (c != ' ' && c != '\t' && c != '\n' && c != EOF)
+		{
 			buff[head] = c;
 			c = fgetc(stream);
 			head++;
 		}
 	}
 	buff[head] = '\0';
-	if (c == EOF) { end_reached = true; }
-	else if (stream == stdin && c == '\n') { end_reached = true; }
+	if (c == EOF)
+	{
+		end_reached = true;
+	}
+	else if (stream == stdin && c == '\n')
+	{
+		end_reached = true;
+	}
 	return buff;
 }
 
