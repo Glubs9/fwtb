@@ -32,6 +32,11 @@ void interpret(dictionary *d, stack *s) {
 				get_word();
 				reset_end_char();
 				continue;
+			} else if (strcmp(str, "\\") == 0) {
+				new_custom_end_char('\n'); //yikes
+				get_word();
+				reset_end_char();
+				continue;
 			}
 			word = search_dict(d, tmp_string);
 			free(tmp_string); //i don't know where to put my free stuff so I put it here
