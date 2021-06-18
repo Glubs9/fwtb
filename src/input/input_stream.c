@@ -21,13 +21,14 @@ char *get_word()
 	char *buff = malloc(sizeof(char) * MAX_WORD_LENGTH);
 	char c = fgetc(stream);
 	int head = 0;
+
 	//this feels wrong, refactor later
 	if (using_custom_end_char)
 	{
 		while (c != custom_end_char)
 		{
-			buff[head] = c;
 			c = fgetc(stream);
+			buff[head] = c;
 			head++;
 		}
 	}

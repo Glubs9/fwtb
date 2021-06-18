@@ -1,12 +1,12 @@
-#include <stdbool.h>								  // for bool, false
-#include <stdlib.h>									  // for free, malloc
-#include <string.h>									  // for strcmp, strcpy
-#include "CONSTANTS.h"								  // for MAX_NAME_LENGTH
-#include "../dictionary/user_code.h"				  // for extract_user_code
-#include "../execute_word/../dictionary/dictionary.h" // for dict_node, sea...
-#include "../execute_word/../stack/stack.h"			  // for stack_empty
-#include "../execute_word/execute.h"				  // for execute_word
-#include "../input/input_stream.h"					  // for get_word, new_...
+#include <stdbool.h>				  // for bool, false
+#include <stdlib.h>					  // for free, malloc
+#include <string.h>					  // for strcmp, strcpy
+#include "CONSTANTS.h"				  // for MAX_NAME_LENGTH
+#include "../dictionary/user_code.h"  // for extract_user_code
+#include "../dictionary/dictionary.h" // for dict_node, sea...
+#include "../stack/stack.h"			  // for stack_empty
+#include "../execute_word/execute.h"  // for execute_word
+#include "../input/input_stream.h"	  // for get_word, new_...
 
 // Ok so I seem to have made a mistake with user input but to be honest I don't really mind all that
 void interpret(dictionary *d, stack *s)
@@ -27,9 +27,7 @@ void interpret(dictionary *d, stack *s)
 			tmp_string = get_word();
 			char *str = malloc(sizeof(char) * MAX_NAME_LENGTH); //sizeof(char) unecersarry
 			strcpy(str, tmp_string);
-			printf("/");
-			printf(str);
-			printf("/\n");
+
 			if (strcmp(str, "(") == 0)
 			{
 				//i feel like this should be moved to execute.c but honestly I am passing so many
