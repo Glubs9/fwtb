@@ -16,6 +16,7 @@ void interpret(dictionary *d, stack *s) {
 	char *tmp_string;
 	user_code *uc;
 	bool immediate_b = false;
+	bool commenting = false; //not currently used but use it later when i refactor to passing struct
 
 	while (words_left() || (!stack_empty(call_stack))) {
 		if (stack_empty(call_stack)) {
@@ -31,7 +32,13 @@ void interpret(dictionary *d, stack *s) {
 			word = pop_stack(call_stack);
 		}
 
-		if (compiling && (word->node_type != immediate) && (!immediate_b)) {
+		//i feel like this should be moved to execute.c but honestly I am passing so many
+		//paramters to execute_word, maybe i should switch to using a struct to pass
+		if (strcmp(word, "(")) {
+			new_custom_end_char(')');
+			get_word();
+			reset_end_char();
+		} else if (compiling && (word->node_type != immediate) && (!immediate_b)) {
 			//add to current word definition
 			//(this feels weird to put in the loop, maybe move to a separate file?)
 			dict_node *top = d->head;
