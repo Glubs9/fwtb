@@ -8,6 +8,8 @@
 
 FILE *stream;
 bool end_reached;
+bool using_custom_end_char; //for when a custom end character is used instead of empty space
+char custom_end_char;
 
 char* get_word()
 {
@@ -19,11 +21,20 @@ char* get_word()
 	char *buff = malloc(sizeof(char) * MAX_WORD_LENGTH);
 	char c = fgetc(stream);
 	int head = 0;
-	//note: switch this loop to do while loop later
-	while (c != ' ' && c != '\t' && c != '\n' && c != EOF) {
-		buff[head] = c;
-		c = fgetc(stream);
-		head++;
+	//this feels wrong, refactor later
+	if (using_custom_end_char) {
+		while (c != custom_end_char) {
+			buff[head] = c;
+			c = fgetc(stream);
+			head++;
+		}
+	} else {
+		//note: switch this loop to do while loop later
+		while (c != ' ' && c != '\t' && c != '\n' && c != EOF) {
+			buff[head] = c;
+			c = fgetc(stream);
+			head++;
+		}
 	}
 	buff[head] = '\0';
 	if (c == EOF) { end_reached = true; }
@@ -57,15 +68,13 @@ void setup_input()
 	end_reached = false;
 }
 
-//test main example
-/*
-int main()
+void new_custom_end_char(char end_char)
 {
-	setup_input();
-	printf("> ");
-	while (words_left()){
-		printf("%s \n", get_word());
-	}
-	printf("end \n");
+	using_custom_end_char = true;
+	custom_end_char = end_char;
 }
-*/
+
+void reset_end_char()
+{
+	using_custom_end_char = false;
+}

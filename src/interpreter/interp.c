@@ -16,6 +16,7 @@ void interpret(dictionary *d, stack *s) {
 	char *tmp_string;
 	user_code *uc;
 	bool immediate_b = false;
+	bool commenting = false; //not currently used but use it later when i refactor to passing struct
 
 	while (words_left() || (!stack_empty(call_stack))) {
 		if (stack_empty(call_stack)) {
@@ -23,6 +24,18 @@ void interpret(dictionary *d, stack *s) {
 			char *str = malloc(sizeof(char) * MAX_NAME_LENGTH); //sizeof(char) unecersarry 
 			strcpy(str, tmp_string);
 			if (strcmp(str, "") == 0) { //causing errors?
+				continue;
+			} else if (strcmp(str, "(") == 0) {
+				//i feel like this should be moved to execute.c but honestly I am passing so many
+				//paramters to execute_word, maybe i should switch to using a struct to pass
+				new_custom_end_char(')');
+				get_word();
+				reset_end_char();
+				continue;
+			} else if (strcmp(str, "\\") == 0) {
+				new_custom_end_char('\n'); //yikes
+				get_word();
+				reset_end_char();
 				continue;
 			}
 			word = search_dict(d, tmp_string);
