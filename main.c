@@ -31,6 +31,7 @@ int main()
 	while (true) {
 		printf("> ");
 		interpret(d, s);
+		printf("ok\n");
 		force_continue();
 	}
 }
