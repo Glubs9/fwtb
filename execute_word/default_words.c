@@ -41,8 +41,10 @@ bool is_default_word(dict_node *node)
 
 int extract_int(dict_node *dn)
 {
-	int *n = dn->data;
-	return *n;
+	int *n = malloc(sizeof(int));
+	int *tmp = dn->data;
+	*n = *tmp;
+	return *n; //is n a new variable?
 }
 
 //short hand for writing extract int from top of stack (e.p.s == extract pop stack)
@@ -126,8 +128,11 @@ void execute_default_word(dictionary* d, dict_node *node, stack *s, bool *compil
 		int *v = malloc(sizeof(int) * 1); //allocate variable space
 		push_word(d, string, v, data);
 	} else if (strcmp(n, "@") == 0) {
-		//idk I shouldn't need anything for now (maybe just clone it and switch type to
-		//number but like what else? maybe something to do with arrays)
+		dict_node *tos1 = pop_stack(s); //i feel like i should extract this logic for pushing new int onto stack somewhere else, it's too long and dry
+		int *v = malloc(sizeof(int));
+		*v = extract_int(tos1);
+		dict_node *copy = create_dict_node("@num", v, number, NULL);
+		push_stack(s, copy);
 	} else if (strcmp(n, "!") == 0) { 
 		dict_node *tos1 = pop_stack(s);
 		int *n = tos1->data;
