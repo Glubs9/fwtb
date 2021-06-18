@@ -35,7 +35,8 @@ bool is_default_word(dict_node *node)
 		strcmp(n, "EXIT_IMMEDIATE") == 0 ||
 		strcmp(n, "CREATE") == 0 ||
 		strcmp(n, "!") == 0 ||
-		strcmp(n, "@") == 0 
+		strcmp(n, "@") == 0 ||
+		strcmp(n, "INCLUDE") == 0
 	);
 }
 
@@ -139,6 +140,17 @@ void execute_default_word(dictionary* d, dict_node *node, stack *s, bool *compil
 		int *tos2 = malloc(sizeof(int));
 		*tos2 = eps(s);
 		tos1->data = tos2; //maybe? (makes sense to me)
+	} else if (strcmp(n, "INCLUDE") == 0) {
+		char *str = get_word(); //repeated code in main.c, should move to separate file
+		bool any_words_left = words_left(); //for if including from command line is the end
+		FILE *f = fopen(str, "r");
+		new_stream(f);
+		interpret(d, s);
+		fclose(f);
+		new_stream(stdin);
+		if (!any_words_left) {
+			force_end(); //force end stream
+		}
 	} else {
 		printf("default word called that has not been implemented\n");
 	}
@@ -166,4 +178,5 @@ void add_default_words(dictionary *d)
 	push_word(d, "CREATE", data, nt);
 	push_word(d, "!", data, nt);
 	push_word(d, "@", data, nt);
+	push_word(d, "INCLUDE", data, nt);
 }
