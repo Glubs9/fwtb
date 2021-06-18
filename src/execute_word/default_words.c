@@ -37,7 +37,8 @@ bool is_default_word(dict_node *node)
 		strcmp(n, "CREATE") == 0 ||
 		strcmp(n, "!") == 0 ||
 		strcmp(n, "@") == 0 ||
-		strcmp(n, "INCLUDE") == 0
+		strcmp(n, "INCLUDE") == 0 ||
+		strcmp(n, "bye") == 0 //why is this lowercase? (idk whatever)
 	);
 }
 
@@ -176,6 +177,8 @@ void execute_default_word(dictionary *d, dict_node *node, stack *s, bool *compil
 		if (!any_words_left) {
 			force_end(); //force end stream
 		}
+	} else if (strcmp(n, "bye") == 0){
+		exit(EXIT_SUCCESS); //alright
 	} else {
 		printf("default word called that has not been implemented\n");
 	}
@@ -204,4 +207,5 @@ void add_default_words(dictionary *d)
 	push_word(d, "!", data, nt);
 	push_word(d, "@", data, nt);
 	push_word(d, "INCLUDE", data, nt);
+	push_word(d, "bye", data, nt);
 }
