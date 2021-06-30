@@ -8,7 +8,7 @@ OBJS := $(patsubst $(SRC)/%.c, $(BUILD)/%.o, $(SRCS))
 
 $(BUILD)/%.o: $(SRC)/%.c
 	mkdir -p $(dir $@)
-	cc -c $< -o $@
+	cc -Iinclude -c $< -o $@
 
 fwtb: $(OBJS)
 	cc -o $@ $^
