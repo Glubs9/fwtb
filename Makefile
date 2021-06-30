@@ -10,11 +10,7 @@ CFLAGS := -Iinclude -Wextra -Wall -Wfloat-equal -Wundef -Wshadow -Wpointer-arith
 	
 $(BUILD)/%.o: $(SRC)/%.c
 	mkdir -p $(dir $@)
-<<<<<<< HEAD
-	cc -Iinclude -c $< -o $@
-=======
 	cc $(CFLAGS) -c $< -o $@
->>>>>>> parent of ea9c4f5... removed all compiler flags, I couldn't find any documentation on them and they feel unecersarry, feel free to msg me to have a talk about this if you want but for now this makes usign the program much nicer
 
 fwtb: $(OBJS)
 	cc -o $@ $^
